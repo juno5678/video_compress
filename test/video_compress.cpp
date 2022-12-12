@@ -40,6 +40,9 @@ int main(int argc,char **argv)
     cv::Mat L_cur_frame,L_ref_frame;
     cv::Mat error_img;
     cv::Mat dct_error_img;
+    cv::Mat idct_error_img;
+    cv::Mat show_dct_img;
+    cv::Mat show_idct_img;
 
     Get_chrominance(cur_img,L_cur_frame);
     Get_chrominance(ref_img,L_ref_frame);
@@ -48,9 +51,12 @@ int main(int argc,char **argv)
     double mse = Cal_MSE(predict_frame,L_ref_frame);
     double PSNR = Cal_PSNR(mse) ;
     Get_error_image(L_ref_frame, predict_frame, error_img);
-    predict_frame.convertTo(predict_frame, CV_32F,1/255.0);
+    predict_frame.convertTo(predict_frame, CV_32F);
     //cv::dct(error_img, dct_error_img);
     DCT_transform(predict_frame, dct_error_img);
+    dct_error_img.convertTo(show_dct_img,CV_8UC1);
+    IDCT_transform(dct_error_img, idct_error_img);
+    idct_error_img.convertTo(idct_error_img, CV_8UC1);
 
 
     printf("mse %3f\n",mse);
@@ -60,7 +66,7 @@ int main(int argc,char **argv)
     cv::imshow("current frame",L_cur_frame);
     cv::imshow("ref frame",L_ref_frame);
     cv::imshow("error frame",error_img);
-    //cv::imshow("dct error frame",dct_error_img);
+    cv::imshow("show dct error frame",show_dct_img);
     cv::waitKey(0);
     return 0;
 

@@ -14,6 +14,7 @@ void Get_chrominance(cv::Mat &origin_img,cv::Mat &chrom_img);
 double Cal_PSNR(double mse,int max_i=255);
 void Get_error_image(cv::Mat &origin_img, cv::Mat &compare_img, cv::Mat &error_img);
 void DCT_transform(cv::Mat &src, cv::Mat &output, int size=8);
+void IDCT_transform(cv::Mat &src, cv::Mat &output, int size=8);
 
 
 #endif
