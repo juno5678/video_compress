@@ -13,6 +13,7 @@ double Cal_MSE(const cv::Mat &predict_frame,const cv::Mat &target_frame);
 void Get_chrominance(cv::Mat &origin_img,cv::Mat &chrom_img);
 double Cal_PSNR(double mse,int max_i=255);
 void Get_error_image(cv::Mat &origin_img, cv::Mat &compare_img, cv::Mat &error_img);
+void Add_image(cv::Mat &origin_img, cv::Mat &compare_img, cv::Mat &output_img);
 void DCT_transform(cv::Mat &src, cv::Mat &output, int size=8);
 void IDCT_transform(cv::Mat &src, cv::Mat &output, int size=8);
 void DCT2D(cv::Mat &src, cv::Mat &output, int size);

@@ -38,12 +38,34 @@ double Cal_PSNR(double mse, int max_i)
 
 void Get_error_image(cv::Mat &origin_img, cv::Mat &compare_img, cv::Mat &error_img)
 {
-    error_img = cv::Mat::zeros(origin_img.size(),origin_img.type());
+    cv::Mat src_float;
+    cv::Mat src_uint;
+    cv::Mat compare_img_float;
+    origin_img.clone().convertTo(src_float,CV_32F,1/255.0);
+    src_float.convertTo(src_uint,CV_8UC1,255);
+    compare_img.clone().convertTo(compare_img_float,CV_32F,1/255.0);
+    error_img = cv::Mat::zeros(origin_img.size(),CV_32F);
     for(int i = 0 ; i < origin_img.rows; i++)
     {
         for(int j = 0 ; j < origin_img.cols ; j++)
         {
-            error_img.at<uchar>(i,j) = std::abs( origin_img.at<uchar>(i,j) - compare_img.at<uchar>(i,j) );
+            error_img.at<float>(i,j) =  origin_img.at<float>(i,j) - compare_img.at<float>(i,j) ;
+        }
+    }
+    cv::imshow("origin img",src_uint);
+}
+void Add_image(cv::Mat &origin_img, cv::Mat &compare_img, cv::Mat &output_img)
+{
+    cv::Mat src_float;
+    cv::Mat compare_img_float;
+    origin_img.clone().convertTo(src_float,CV_32F,1/255.0);
+    compare_img.clone().convertTo(compare_img_float,CV_32F,1/255.0);
+    output_img = cv::Mat::zeros(origin_img.size(),CV_32F);
+    for(int i = 0 ; i < origin_img.rows; i++)
+    {
+        for(int j = 0 ; j < origin_img.cols ; j++)
+        {
+            output_img.at<float>(i,j) =  origin_img.at<float>(i,j) - compare_img.at<float>(i,j) ;
         }
     }
 }
